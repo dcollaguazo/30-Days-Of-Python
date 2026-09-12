@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 import json
+import itertools
 
 path_str = str(Path(__file__).resolve().parent.parent)
 sys.path.append(path_str)
@@ -126,6 +127,7 @@ from data.countries import countries
 # for fruit in range(-1,):
 #     print(fruit)
 # Go to the data folder and use the countries_data.py file.
+
 countries_data_path = path_str + "/data/countries_data.json"
 with open(countries_data_path, encoding="utf-8") as f:
     countries_data = json.load(f)
@@ -133,14 +135,35 @@ with open(countries_data_path, encoding="utf-8") as f:
 # print(countries_data)
 
 # What are the total number of languages in the data
-all_languages = []
-countries_ds_ln = len(countries_data)
+# all_languages = []
+# countries_ds_ln = len(countries_data)
 
-for i in range(countries_ds_ln):
-    all_languages += countries_data[i]['languages']
-total_languages = len(set(all_languages))
-print((f'The total number of languages in the data set is {total_languages}'))
+# for i in range(countries_ds_ln):
+#     all_languages += countries_data[i]['languages']
+# total_languages = len(set(all_languages))
+# print((f'The total number of languages in the data set is {total_languages}'))
 
-all_languages 
+# count = 0;
+# unique_lang_dict = {}
+
+# for language in all_languages:
+#     if language not in unique_lang_dict.keys():
+#         unique_lang_dict[language] = 1
+#     else:
+#         unique_lang_dict[language] += 1
+# # print(unique_lang_dict)
+
+# asc = {k: v for k, v in sorted(unique_lang_dict.items(), key=lambda item: item[1])}
+# desc = {k: v for k, v in sorted(unique_lang_dict.items(), key=lambda item: item[1], reverse=True)}
+
+# top_ten_langs_spoken =  dict(itertools.islice(desc.items(), 10))
+# print(top_ten_langs_spoken.keys())
 
 # Find the 10 most populated countries in the world
+countries_population = {}
+for country in countries_data:
+   countries_population[country['name']] = country['population']
+
+desc = {k:v for k, v in sorted(dict(countries_population).items(), key = lambda item:item[1], reverse=True)}
+top_ten_most_populated = dict(itertools.islice(desc.items(), 10))
+print(top_ten_most_populated)
